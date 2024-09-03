@@ -1,1 +1,1 @@
-# EAM1-FFR
+FFR analysis code for EAM1 project
