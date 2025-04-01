@@ -3,7 +3,7 @@
 %created by Jacie R. McHaney on 12/6/24
 
 close all
-clear all
+clearvars -global
 
 %directories and paths.
 maindir = '/Users/dsj3886/Library/CloudStorage/OneDrive-SharedLibraries-NorthwesternUniversity/SoundBrain Lab - Documents';
@@ -73,34 +73,12 @@ for i =1:length(subfolders)
         order = str2num(namepts{4}(5));
         task = namepts{3};
 
-        %get track list of stim files based on task and acq order
-        if strcmpi(task,'task-alice') || strcmpi(task,'task-mix')
-            if order==1
-                stimwavs = arrayfun(@num2str,1:15,'UniformOutput',0);
-            elseif order ==2
-                stimwavs = arrayfun(@num2str,16:30,'UniformOutput',0);
-            % elseif order ==3
-            %     stimwavs = arrayfun(@num2str,31:45,'UniformOutput',0);
-            % elseif order==4
-            %     stimwavs = arrayfun(@num2str,46:60,'UniformOutput',0);
-            end
-        elseif strcmpi(task,'task-einstein')
-            stimwavs = arrayfun(@num2str,1:15,'UniformOutput',0);
-        end
-
-        %get number of tracks for this file
-        ntracks = length(stimwavs);
-
         %read in stimulus wav files
         tracknow = 1;
         while tracknow < ntracks+1
 
             %read in appropriate stim file
-            if strcmpi(task,'task-alice') || strcmpi(task,'task-mix')
-                [y,fs] = audioread([stimdir '/alice_stimuli/track' stimwavs{tracknow} '.wav']);
-            elseif strcmpi(task,'task-einstein')
-                [y,fs] = audioread([stimdir '/einst_stimuli/Track' stimwavs{tracknow} '.wav']);
-            end
+            [y,fs] = audioread([stimdir 'Da_Stimulus_44100Hz_pol' tracknow '.wav']);
 
             %get envelope of wav file and resample it
             stimsound = abs(hilbert(y));
