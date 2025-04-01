@@ -6,16 +6,16 @@ close all
 clear all
 
 %directories and paths.
-maindir = '/Users/myk4766/Library/CloudStorage/OneDrive-SharedLibraries-NorthwesternUniversity/SoundBrain Lab - Documents';
+maindir = '/Users/dsj3886/Library/CloudStorage/OneDrive-SharedLibraries-NorthwesternUniversity/SoundBrain Lab - Documents';
 addpath ([maindir '/Jacie/Pitt_CRC/eeglab14_1_2b']);
 eeglab;
 
-expdir = [maindir '/Lab Research Projects/Experiments/NU_Experiments/EHL1'];
-rawdir = [expdir '/data/EEG/raw_data'];
-stimdir = [expdir '/expFiles'];
+expdir  = [maindir '/Lab Research Projects/Experiments/NU_Experiments/EAM1'];
+eegdir  = [expdir '/data-bids'];
+stimdir = [expdir  'K01_FFR/button_FFR/stimuli/'];
 
 %pull in already completed data
-outname = [expdir '/data/EEG/EHL1_adjusted_triggertimes.csv'];
+outname = [expdir 'data/EEG/EHL1_adjusted_triggertimes.csv'];
 comp = readtable(outname);
 fdone = unique(comp.filename); %get completed file names
 
@@ -29,7 +29,7 @@ for i =1:length(subfolders)
 
     %get subject folders
     subpath = [rawdir '/' subfolders{i}];
-    subfiles = dir([subpath '/*.bdf']);
+    subfiles = dir([subpath '/eeg/*.bdf']);
     subfiles = cellstr(char(subfiles.name));
 
     for j = 1:length(subfiles)
