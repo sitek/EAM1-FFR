@@ -15,6 +15,7 @@ Manuscript in preparation – stay tuned for a preprint, coming soon!
 4. Preprocess and analyze the cortical ERPs: [erp_processing-minimal_mne-bids.ipynb](erp_processing-minimal_mne-bids.ipynb)
 
 
-## How to contribute
+### How to contribute
 Windows: in a bash terminal, run: `bash setup-git-jupyter-filters.sh`
-Mac: run `chmod +x setup-git-filters.sh` then `./setup-git-filters.sh `
+
+Mac: run `chmod +x setup-git-jupyter-filters.sh` then `./setup-git-jupyter-filters.sh `
