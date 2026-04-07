@@ -1,4 +1,4 @@
-FFR analysis code for EAM1 project (in progress – Jan 2025)
+FFR analysis code for EAM1 project
 
 Steps:
 1. Extract precise sound onset timing from the EEG ergo channel: [stim-track-events/preprocess_data.m](stim-track-events/preprocess_data.m)
