@@ -16,6 +16,9 @@ Manuscript in preparation – stay tuned for a preprint, coming soon!
 
 
 ### How to contribute
+Make sure nbconvert is installed (pip install nbconvert or conda install nbconvert)
+
+
 Windows: in a bash terminal, run: `bash setup-git-jupyter-filters.sh`
 
 Mac: run `chmod +x setup-git-jupyter-filters.sh` then `./setup-git-jupyter-filters.sh `
