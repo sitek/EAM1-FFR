@@ -8,17 +8,15 @@ Manuscript in preparation – stay tuned for a preprint, coming soon!
 **TODO**: Share data on [OpenNeuro](https://openneuro.org)
 
 ### Analysis steps
-1. Extract precise sound onset timing from the EEG ergo channel: [stim-track-events/preprocess_data.m](stim-track-events/preprocess_data.m)
-  - **TODO**: Update the `stim-track-events` code to a modern Python implementation (in progress)
+1. Extract precise sound onset timing from the EEG ergo channel: [get_event_onsets_stimtrack.ipynb](get_event_onsets_stimtrack.ipynb)
 2. Convert the EEG data to the Brain Imaging Data Structure (EEG-BIDS): [bids-conversion.ipynb](bids-conversion.ipynb)
 3. Preprocess and analyze the FFRs: [ffr_processing-minimal_mne-bids.ipynb](ffr_processing-minimal_mne-bids.ipynb)
 4. Preprocess and analyze the cortical ERPs: [erp_processing-minimal_mne-bids.ipynb](erp_processing-minimal_mne-bids.ipynb)
 
 
 ### How to contribute
-Make sure nbconvert is installed (pip install nbconvert or conda install nbconvert)
+Before making a commit, please set up the following gitconfig filter to avoid metadata clutter:
 
-
-Windows: in a bash terminal, run: `bash setup-git-jupyter-filters.sh`
-
-Mac: run `chmod +x setup-git-jupyter-filters.sh` then `./setup-git-jupyter-filters.sh `
+- Make sure nbconvert is installed (pip install nbconvert or conda install nbconvert)
+- Windows: in a bash terminal, run: `bash setup-git-jupyter-filters.sh`
+- Mac: run `chmod +x setup-git-jupyter-filters.sh` then `./setup-git-jupyter-filters.sh `
