@@ -16,11 +16,10 @@ Translated from the original MATLAB code by Laura 3/19/2026 (lauraraiff2030@u.no
 """
 import os
 import mne
-from scipy.signal import find_peaks, resample, correlate, correlation_lags
+from scipy.signal import find_peaks, resample, correlate, correlation_lags, hilbert
 from scipy.io import wavfile
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 def normalized_xcorr(x, y):
@@ -73,6 +72,20 @@ def finddelay(x, y, maxlag=None):
 
     return -best_lag
 
+
+def envelope(x):
+    # remove DC offset
+    x_mean = np.mean(x)
+    x_centered = x - x_mean
+
+    # envelope amplitude
+    x_amp = np.abs(hilbert(x_centered))
+
+    # add offset back in 
+    y_upper = x_mean + x_amp
+    y_lower = x_mean - x_amp
+
+    return y_upper, y_lower
 
 # define file paths (CHANGE THESE TO YOUR FILE PATHS)
 root_dir = r"C:\Users\Laura\OneDrive - Northwestern University\SoundBrain Lab - EAM1\data-bids"
@@ -129,7 +142,12 @@ for sub_id in all_sub_dirs:
         # find peaks in the stimtrack data
         stimtrack_data = eeg_raw.get_data(picks=['Erg1']).T.flatten()
         stimtrack_data = stimtrack_data / max(abs(stimtrack_data))  # normalize 
-        peaks, _ = find_peaks(stimtrack_data, distance=fs*0.17, height=0.2)
+
+        # compute and normalize the upper envelope of the signal
+        upper_env, _ = envelope(stimtrack_data)
+        upper_env = upper_env / max(abs(upper_env))
+
+        peaks, _ = find_peaks(upper_env, distance=fs*0.17, height=0.5)
 
         # we expect there to be 1200 peaks, but sometimes there are more or less
         if len(peaks) != expected_peaks_num:
@@ -138,8 +156,9 @@ for sub_id in all_sub_dirs:
 
             # for extra peaks in the beginning of the stimtrack
             if len(peaks) > expected_peaks_num:
-                gap_idx = np.where(isi > np.median(isi) * 10)[0][0]
-                peaks = peaks[(gap_idx + 1):]
+                gap_idx = np.where(isi > np.median(isi) * 10)
+                if gap_idx:
+                    peaks = peaks[(gap_idx[0][0] + 1):]
 
         # epoching
         onset_arr = []
